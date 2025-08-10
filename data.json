@@ -1,0 +1,13 @@
+{
+	"tags": {
+		"Language": ["C"],
+		"Project size": ["Tiny", "Small", "Medium", "Large"],
+		"Misc": ["Game of Life"]
+	},
+	"projects": {
+		"Game of Life in C (hardcoded distribution)": {
+			"path": "/projects/GameOfLife-C",
+			"tags": ["C", "Tiny", "Game of Life"]
+		}
+	}
+}
