@@ -205,7 +205,7 @@
 			
 			tags() {
 				return {
-					[Symbol.iterator]()* {
+					*[Symbol.iterator]() {
 						for (const tag of this.tags) {
 							yield tag;
 						}
