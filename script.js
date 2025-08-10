@@ -46,54 +46,6 @@
 		}
 		
 		class SimpleFilter extends Filter {
-			constructor(pred'use strict';
-
-(() => {
-	const modules = Object.create(null);
-	
-	modules.config = Object.freeze({
-		__proto__: null,
-		dataPath: "/data.json"
-	});
-	
-	modules.utils = (() => {
-		
-		const defaultErrFn = (error) => {
-			console.error(error);
-			return null;
-		}
-		
-		function tryCatchWrap(fn, errFn = undefined) {
-			try {
-				return fn();
-			} catch (error) {
-				return (errFn ?? defaultErrFn)();
-			}
-		}
-		
-		return Object.freeze({
-			__proto__: null,
-			tryCatchWrap
-		});
-		
-	})();
-	
-	modules.typing = (() => {
-		const state = Symbol("state");
-		const check = Symbol("check");
-		
-		/*
-			interface Filter<T, U = Any>:
-				[check](value: U) -> (value is T) ? null : string;
-		*/
-		
-		class Filter {
-			and(...others) {
-				return new ConjunctionFilter(this, ...others);
-			}
-		}
-		
-		class SimpleFilter extends Filter {
 			constructor(predicate, message) {
 				super();
 				this[state] = {predicate, message};
