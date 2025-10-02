@@ -1,3 +1,5 @@
+# Status: Complete
+
 # Game of Life in C
 
 This project runs an instance of the [game of life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life), as designed by John Conway in 1970.
