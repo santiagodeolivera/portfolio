@@ -1,0 +1,70 @@
+body {
+	margin: 0;
+}
+
+#nav {
+	background: #0080ff80;
+	height: 50px;
+	display: flex;
+	align-items: center;
+}
+
+#nav .-search {
+	--height: 36px;
+	--border: 2px;
+	
+	width: 200px;
+	height: var(--height);
+	border: var(--border) solid gray;
+	border-radius: 9999px;
+	background: white;
+	display: flex;
+	align-items: center;
+}
+
+#nav .-search .-input {
+	flex-grow: 1;
+	flex-shrink: 1;
+	
+	width: 0;
+	margin-left: 10px;
+	margin-right: 10px;
+	border: none;
+	
+	transition: box-shadow 0.2s;
+}
+
+#nav .-search .-input:focus {
+	outline: none;
+	box-shadow: 0px 3px 3px -3px black;
+}
+
+#nav .-search .-submit {
+	--margin: 6px;
+	--padding: 0px;
+	--size: calc(var(--height) - var(--padding) * 2 - var(--margin) * 2);
+	
+	width: var(--size);
+	height: var(--size);
+	padding: var(--padding);
+	border: none;
+	border-radius: 9999px;
+	margin: var(--margin);
+	
+	background-color: white;
+	background-image: url("/images/magnifying_glass.svg");
+	background-size: contain;
+	
+	flex-shrink: 0;
+	
+	transition: background 0.5s;
+}
+
+#nav .-search .-submit:hover {
+	background-color: #d0d0d0;
+}
+
+#nav .-search .-submit:active {
+	transition: initial;
+	background-color: #b0b0b0;
+}
