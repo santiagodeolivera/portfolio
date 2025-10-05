@@ -12,8 +12,9 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
+const Product = require('./product').default;
 app.get('/', (req, res) => {
-	res.render('hello', {title: "Hello world page"});
+	res.render('hello', {title: "Hello world page", product: new Product("1", "Item", 30, null)});
 });
 
 app.use(express.static(path.join(__dirname, 'public')));

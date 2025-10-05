@@ -7,13 +7,22 @@ body {
 	height: 50px;
 	display: flex;
 	align-items: center;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#nav .-logo {
+	height: 36px;
 }
 
 #nav .-search {
 	--height: 36px;
 	--border: 2px;
+
+	--btn-margin: 3px;
+	--btn-size: calc(var(--height) - var(--btn-margin) * 2);
 	
-	width: 200px;
+	width: 400px;
 	height: var(--height);
 	border: var(--border) solid gray;
 	border-radius: 9999px;
@@ -27,33 +36,33 @@ body {
 	flex-shrink: 1;
 	
 	width: 0;
-	margin-left: 10px;
+	height: calc(var(--btn-size) - 4px);
+	
+	margin-left: 20px;
 	margin-right: 10px;
 	border: none;
-	
-	transition: box-shadow 0.2s;
 }
 
 #nav .-search .-input:focus {
 	outline: none;
-	box-shadow: 0px 3px 3px -3px black;
+	box-shadow: 0px 1px 1px -1px black;
 }
 
 #nav .-search .-submit {
-	--margin: 6px;
-	--padding: 0px;
-	--size: calc(var(--height) - var(--padding) * 2 - var(--margin) * 2);
-	
-	width: var(--size);
-	height: var(--size);
-	padding: var(--padding);
+	width: var(--btn-size);
+	height: var(--btn-size);
+	padding: var(--btn-padding);
 	border: none;
 	border-radius: 9999px;
-	margin: var(--margin);
+	margin: var(--btn-margin);
 	
 	background-color: white;
 	background-image: url("/images/magnifying_glass.svg");
-	background-size: contain;
+	background-origin: content-box;
+	background-clip: content-box;
+	background-position: center;
+	background-size: 80% 80%;
+	background-repeat: no-repeat;
 	
 	flex-shrink: 0;
 	
@@ -67,4 +76,37 @@ body {
 #nav .-search .-submit:active {
 	transition: initial;
 	background-color: #b0b0b0;
+}
+
+.product-card {
+	display: flex;
+	flex-direction: column;
+	
+	width: 150px;
+	height: 200px;
+	padding: 5px 10px;
+	
+	background: white;
+	box-shadow: 2px 2px 3px black;
+	
+	font-family: sans-serif;
+	font-size: 0.8em;
+	color: #0080ff;
+}
+
+.product-card > * {
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.product-card .-name {
+	font-size: 2em;
+}
+
+.product-card .-img {
+	flex-grow: 1;
+}
+
+.product-card .-price {
+	font-style: italic;
 }
