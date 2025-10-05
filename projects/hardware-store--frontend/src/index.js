@@ -1,23 +1,49 @@
-const express = require('express');
-const expressHandlebars = require('express-handlebars');
-const path = require('path');
+'use strict';
+
+import express from "express";
+import expressSession from "express-session";
+import expressHandlebars from "express-handlebars";
+import path from "path";
+import { getData } from "./vars.js";
+import { router as mainRouter } from "./routes/index.js";
+import env from "#local/env.json" with { type: 'json' };
+
+const { __dirname } = getData(import.meta.url);
 
 // TODO: Set favicon.ico
 
 const app = express();
-const hbs = expressHandlebars.create();
+const hbs = expressHandlebars.create({
+	helpers: {
+		concat: (...args) => {
+			args.pop();
+			
+			for (const v of args) {
+				if (typeof v != "string") {
+					const str = JSON.stringify(typeof v);
+					throw new Error(`Expected a list of strings, but one of them is of type ${str}`);
+				}
+			}
+			
+			return args.join("");
+		}
+	}
+});
 const port = 3000;
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
-const Product = require('./product').default;
-app.get('/', (req, res) => {
-	res.render('hello', {title: "Hello world page", product: new Product("1", "Item", 30, null)});
-});
+app.use(expressSession({
+	secret: env["session-secret"],
+	resave: false,
+	saveUninitialized: false,
+}));
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(mainRouter);
 
 app.use((err, req, res, next) => {
 	res.status(500);

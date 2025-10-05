@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>{{ title }}</title>
+		<title>{{ base.title }}</title>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="/css/main.css">
+		{{#each otherCSSFiles }}
+			<link rel="stylesheet" href={{ concat "/css/" this ".css" }}>
+		{{/each}}
 	</head>
 	<body>
 		{{> nav }}
