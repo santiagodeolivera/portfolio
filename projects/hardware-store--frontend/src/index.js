@@ -26,7 +26,15 @@ const hbs = expressHandlebars.create({
 			}
 			
 			return args.join("");
-		}
+		},
+		required: (value, name) => {
+			if (value == undefined) {
+				throw new Error(`Missing required value: ${name}`);
+			}
+			
+			return value;
+		},
+		or: (value1, _default) => (value == undefined ? _default : value1)
 	}
 });
 const port = 3000;
@@ -39,6 +47,9 @@ app.use(expressSession({
 	secret: env["session-secret"],
 	resave: false,
 	saveUninitialized: false,
+	cookie: {
+		maxAge: 30 * 60 * 1000
+	}
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));

@@ -7,5 +7,7 @@
 		<button class="-submit"></button>
 	</div>
 	<div style="flex-grow: 1;"></div>
-	<a href={{ concat "/login?redirect=" urlEncodedPath }}>Log in</a>
+	{{# each navLinks }}
+		<a class="nav-link" href={{ this.href }}>{{ this.txt }}</a>
+	{{/ each }}
 </nav>

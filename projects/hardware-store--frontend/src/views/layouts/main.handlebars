@@ -4,12 +4,16 @@
 		<title>{{ base.title }}</title>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="/css/main.css">
-		{{#each otherCSSFiles }}
+		{{# each CSSFiles }}
 			<link rel="stylesheet" href={{ concat "/css/" this ".css" }}>
-		{{/each}}
+		{{/ each }}
 	</head>
 	<body>
-		{{> nav }}
+		{{> nav navLinks=navLinks }}
 		{{{ body }}}
+		<script src="/scripts/main.js"></script>
+		{{# each scriptFiles }}
+			<script src={{this}}></script>
+		{{/ each }}
 	</body>
 </html>

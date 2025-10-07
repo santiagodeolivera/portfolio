@@ -110,3 +110,51 @@ body {
 .product-card .-price {
 	font-style: italic;
 }
+
+.notif-deployment-system {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: start;
+}
+
+.notif-deployment-system > .notif {
+	display: flex;
+	padding: 1em;
+	width: 100%;
+	background: #e0e0e080;
+	border-radius: 0.5em;
+}
+
+.notif-deployment-system > .notif.type-info {
+	background: #ffff0080;
+}
+
+.notif-deployment-system > .notif.type-error {
+	background: #ff000080;
+}
+
+.notif-deployment-system > .notif > .-txt {
+	flex-grow: 1;
+}
+
+.notif-deployment-system > .notif > .-close-btn {
+	width: 1em;
+	
+	background-image: url("/images/close.svg");
+	background-origin: content-box;
+	background-clip: content-box;
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
+	
+	opacity: 0.3;
+}
+
+.notif-deployment-system > .notif > .-close-btn:hover {
+	opacity: 0.4;
+}
+
+.notif-deployment-system > .notif > .-close-btn:active {
+	opacity: 0.6;
+}

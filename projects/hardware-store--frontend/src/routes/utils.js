@@ -1,22 +1,28 @@
 function getBaseData(req) {
 	return {
 		urlEncodedPath: encodeURIComponent(req.path),
-		otherCSSFiles: [],
+		CSSFiles: [],
+		scriptFiles: [],
+		navLinks: [
+			{txt: "Log in", href: "/login"}
+		]
 	};
 }
 
 const fileNameRegExp = /^[a-zA-Z0-9-_]+$/;
 function verifyData(data) {
-	if (!Array.isArray(data.otherCSSFiles)) {
+	if (!Array.isArray(data.CSSFiles)) {
 		throw new Error();
 	}
 	
-	if (data.otherCSSFiles.some(v => typeof v !== "string")) {
-		throw new Error();
-	}
-	
-	if (data.otherCSSFiles.some(v => !fileNameRegExp.test(v))) {
-		throw new Error();
+	for (const v of data.CSSFiles) {
+		if (typeof v !== "string") {
+			throw new Error();
+		}
+		
+		if (!fileNameRegExp.test(v)) {
+			throw new Error();
+		}
 	}
 }
 
