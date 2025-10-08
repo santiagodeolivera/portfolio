@@ -21,6 +21,21 @@ services:
     networks:
       - hardware-store--network
 
+  bash-2:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4000:3000"
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./local:/usr/src/app/local
+      - /usr/src/app/node_modules
+      - hardware-store--db:/usr/db
+    networks:
+      - hardware-store--network
+    command: bash
+
 networks:
   hardware-store--network:
     external: true
