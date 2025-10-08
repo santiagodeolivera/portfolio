@@ -1,5 +1,5 @@
 {
-  "name": "hardware-store--frontend",
+  "name": "hardware-store--backend",
   "type": "module",
   "version": "1.0.0",
   "description": "",
@@ -13,12 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0",
-    "express-handlebars": "^8.0.3",
-    "express-session": "^1.18.2"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
   },
   "imports": {
     "#root/*": "./src/*",

@@ -6,7 +6,6 @@ import expressHandlebars from "express-handlebars";
 import path from "path";
 import { getData } from "./vars.js";
 import { router as mainRouter } from "./routes/index.js";
-import env from "#local/env.json" with { type: 'json' };
 
 const { __dirname } = getData(import.meta.url);
 
