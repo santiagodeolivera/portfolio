@@ -1,0 +1,1 @@
+docker run -v hardware-store--db:/usr/db -it --rm node:22 bash

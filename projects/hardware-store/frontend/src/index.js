@@ -56,6 +56,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(mainRouter);
 
+const environ = process.env.NODE_ENV || "development";
+if (environ === "development") {
+	app.use("/test", async (req, res) => {
+		const response = await fetch(env["backend-url"]);
+		const text = await response.text();
+		res.send(text);
+	});
+}
+
 app.use((err, req, res, next) => {
 	res.status(500);
 	console.error(err);

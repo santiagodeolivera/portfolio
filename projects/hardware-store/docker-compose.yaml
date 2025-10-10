@@ -1,40 +1,40 @@
 services:
-  dev:
+  front:
     build:
-      context: .
+      context: frontend
       dockerfile: Dockerfile.dev
     ports:
       - "4000:3000"
     volumes:
-      - ./src:/usr/src/app/src
-      - ./local:/usr/src/app/local
+      - ./frontend/src:/usr/src/app/src
+      - ./frontend/local:/usr/src/app/local
+      - /usr/src/app/node_modules
+    networks:
+      - hardware-store--network
+  
+  back:
+    build:
+      context: backend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5000:3000"
+    volumes:
+      - ./backend/src:/usr/src/app/src
+      - ./backend/local:/usr/src/app/local
       - /usr/src/app/node_modules
       - hardware-store--db:/usr/db
     networks:
       - hardware-store--network
 
-  bash:
-    image: node:22
-    volumes:
-      - hardware-store--db:/usr/db
-    command: bash
-    networks:
-      - hardware-store--network
-
-  bash-2:
+  setup:
     build:
-      context: .
+      context: db-setup
       dockerfile: Dockerfile.dev
-    ports:
-      - "4000:3000"
     volumes:
-      - ./src:/usr/src/app/src
-      - ./local:/usr/src/app/local
+      - ./db-setup/src:/usr/src/app/src
+      - ./db-setup/local:/usr/src/app/local
       - /usr/src/app/node_modules
       - hardware-store--db:/usr/db
-    networks:
-      - hardware-store--network
-    command: bash
 
 networks:
   hardware-store--network:
