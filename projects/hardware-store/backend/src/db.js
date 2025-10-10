@@ -5,12 +5,22 @@ const db = SqliteDatabase(env["db-path"]);
 
 class Database {
     constructor() {
+        const stmts = {
+            getProducts: db.prepare("SELECT id, name FROM products"),
+            addProduct: db.prepare("INSERT INTO products (name) VALUES (?)")
+        };
     }
 
     async getProducts() {
-        const stmt = db.prepare("SELECT id, name FROM products");
-        const result = stmt.all();
-        return result.map(({id, name}) => ({id, name}));
+        return this.stmts.getProducts.all();
+    }
+
+    async addProduct(name) {
+        if (typeof name !== "string") {
+            throw new Error();
+        }
+
+        this.stmts.addProduct.run(name);
     }
 }
 
