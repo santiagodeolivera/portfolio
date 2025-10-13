@@ -1,27 +1,36 @@
 import SqliteDatabase from 'better-sqlite3';
 import { env } from './env.js';
 
-const db = SqliteDatabase(env["db-path"]);
+export const db = SqliteDatabase(env["db-path"]);
 
-class Database {
-    constructor() {
-        const stmts = {
-            getProducts: db.prepare("SELECT id, name FROM products"),
-            addProduct: db.prepare("INSERT INTO products (name) VALUES (?)")
-        };
+export class GenericDatabase {
+    constructor(getStmt, getByIdStmt, addStmt, editStmt, removeStmt) {
+        this.getStmt = db.prepare(getStmt);
+        this.getByIdStmt = db.prepare(getByIdStmt);
+        this.addStmt = db.prepare(addStmt);
+        this.editStmt = db.prepare(editStmt);
+        this.removeStmt = db.prepare(removeStmt);
     }
 
-    async getProducts() {
-        return this.stmts.getProducts.all();
+    async get() {
+        return this.getStmt.all();
     }
 
-    async addProduct(name) {
-        if (typeof name !== "string") {
-            throw new Error();
-        }
+    async getById(id) {
+        return this.getByIdStmt.get({ id });
+    }
 
-        this.stmts.addProduct.run(name);
+    async add(name) {
+        this.addStmt.run({ name });
+    }
+
+    async edit(id, data) {
+        const res = this.editStmt.run({ ...data, id });
+        return res.changes > 0;
+    }
+
+    async remove(id) {
+        const res = this.removeStmt.run({ id });
+        return res.changes > 0;
     }
 }
-
-export const database = new Database();

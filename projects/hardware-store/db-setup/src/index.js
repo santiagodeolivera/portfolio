@@ -9,11 +9,12 @@ fs.unlinkSync(dbPath);
 const db = Database(dbPath);
 
 const commands = [
-    ["CREATE TABLE products (id INTEGER PRIMARY KEY, name VARCHAR(30) NOT NULL)"],
+    ["CREATE TABLE products (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(30) NOT NULL)"],
     ["INSERT INTO products (name) VALUES (?)", "A"],
     ["INSERT INTO products (name) VALUES (?)", "B"],
     ["INSERT INTO products (name) VALUES (?)", "C"],
-    ["INSERT INTO products (name) VALUES (?)", "D"]
+    ["INSERT INTO products (name) VALUES (?)", "D"],
+    ["CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(30) NOT NULL, salt CHAR(10) NOT NULL, password CHAR(64) NOT NULL)"],
 ];
 
 for (const [command, ...bindParams] of commands) {
