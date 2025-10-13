@@ -1,11 +1,15 @@
-export function getStringFromBody(req, key) {
-    const res = req.body[key];
+export function getStringFromObject(obj, key) {
+    const res = obj[key];
 
     if (typeof res !== "string") {
         throw new Error();
     }
 
     return res;
+}
+
+export function getStringFromBody(req, key) {
+    return getStringFromObject(req.body, key);
 }
 
 export function getNumberFromParams(req, key) {
