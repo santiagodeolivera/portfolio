@@ -7,13 +7,7 @@ export function assertString(v) {
 }
 
 export function getStringFromObject(obj, key) {
-    const res = obj[key];
-
-    if (typeof res !== "string") {
-        throw new Error();
-    }
-
-    return res;
+    return assertString(obj[key]);
 }
 
 export function getStringFromBody(req, key) {
@@ -34,4 +28,17 @@ export function getNumberFromParams(req, key) {
     }
 
     return res;
+}
+
+// For functions of structure (..., (err, value) => ...) => ...
+export function promisify(fn) {
+    return (...args) => new Promise((resolve, reject) => {
+        fn(...args, (err, value) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(value);
+            }
+        })
+    })
 }

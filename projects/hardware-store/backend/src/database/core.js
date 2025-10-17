@@ -1,3 +1,14 @@
+/*
+
+type DbFunction<I, O, E> = fn(I) -> Result<O, E>;
+
+Possible solutions:
+    A generic database that supports all CRUD operations
+    Individual functions
+    A router that supports all CRUD operations
+
+*/
+
 import SqliteDatabase from 'better-sqlite3';
 import { env } from '../env.js';
 
