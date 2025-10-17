@@ -20,8 +20,8 @@ export class GenericDatabase {
         return this.getByIdStmt.get({ id });
     }
 
-    async add(name) {
-        this.addStmt.run({ name });
+    async add(data) {
+        this.addStmt.run(data);
     }
 
     async edit(id, data) {

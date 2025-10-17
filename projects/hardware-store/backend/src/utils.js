@@ -1,3 +1,11 @@
+export function assertString(v) {
+    if (typeof v !== "string") {
+        throw new Error();
+    }
+
+    return v;
+}
+
 export function getStringFromObject(obj, key) {
     const res = obj[key];
 

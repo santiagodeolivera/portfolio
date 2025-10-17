@@ -1,16 +1,15 @@
 import express from 'express';
 import { productDb } from "./database/product.js";
 import { createRestAPIRouter } from './api.js';
-import { getStringFromObject } from './utils.js';
+import { assertString } from './utils.js';
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 
-app.use(createRestAPIRouter(productDb, (body) => ({
-    name: getStringFromObject(body, "name")
-})));
+const productsRouter = createRestAPIRouter(productDb, (body) => ({ name: assertString(body.name)}));
+app.use("/products", productsRouter);
 
 app.use((err, req, res, next) => {
     console.error(err);
