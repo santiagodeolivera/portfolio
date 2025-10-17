@@ -1,0 +1,4 @@
+#input-textarea {
+    width: 50vw;
+    height: calc(100vh - 10rem);
+}
