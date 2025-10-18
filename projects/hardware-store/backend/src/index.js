@@ -1,6 +1,6 @@
 import express from 'express';
 import { productDb } from "./database/product.js";
-import { createRestAPIRouter } from './api.js';
+import { createRestAPIRouter } from './routers/rest-generic.js';
 import { assertString } from './utils.js';
 
 const app = express();

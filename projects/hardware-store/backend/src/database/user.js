@@ -5,7 +5,8 @@ import { db } from "./core.js";
 const pbkdf2 = promisify(crypto.pbkdf2);
 
 const stmts = {
-    add: db.prepare("INSERT INTO users (name, salt, hash) VALUES (@name, @salt, @hash)")
+    add: db.prepare("INSERT INTO users (name, salt, hash) VALUES (@name, @salt, @hash)"),
+    getByName: db.prepare("SELECT salt, hash FROM users WHERE name = @name")
 };
 
 async function createSalt() {
@@ -20,10 +21,9 @@ async function saltAndHash(salt, password) {
 async function insertUserRow(name, salt, hash) {
     try {
         stmts.add.run({ name, salt, hash });
-        return true;
     } catch (e) {
         console.error("An error appeared when registering new user.");
-        return false;
+        throw e;
     }
 }
 
@@ -32,11 +32,26 @@ export async function createNewUser(name, password) {
     const salt = await createSalt();
     const hash = await saltAndHash(salt, password);
 
-    return insertUserRow(name, salt, hash);
+    insertUserRow(name, salt, hash);
 }
 
 // Returns true if the password matches with the stored salt and hash. Otherwise, returns false
-export async function verifyPassword(storedSalt, storedHash, password) {
+async function verifyPassword(storedSalt, storedHash, password) {
     const resultHash = await saltAndHash(storedHash, password);
     return resultHash === storedHash;
 }
+
+export async function verifyUser(name, password) {
+    const dbResult = stmts.getByName.get({ name });
+    if (dbResult == undefined) {
+        return "Invalid credentials";
+    }
+
+    const { salt, hash } = dbResult;
+    if (!verifyPassword(salt, hash, password)) {
+        return "Invalid credentials";
+    }
+
+    return undefined;
+}
+
