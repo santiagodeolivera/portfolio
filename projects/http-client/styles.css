@@ -1,4 +1,69 @@
-#input-textarea {
-    width: 50vw;
-    height: calc(100vh - 10rem);
+body, html, .view {
+    height: 100%;
 }
+
+body {
+    margin: 0;
+}
+
+.view {
+    box-sizing: border-box;
+    padding: 1em;
+}
+
+body:not([show-output]) #view-output, body[show-output] #view-input {
+    display: none;
+}
+
+#view-input {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-around;
+}
+
+#input-textarea {
+    flex-grow: 1;
+    resize: none;
+}
+
+#input-submit {
+    margin: 1em;
+    margin-bottom: 0;
+}
+
+#view-output {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-around;
+}
+
+#output-pre {
+    box-sizing: border-box;
+    border: 1px solid black;
+    flex-grow: 1;
+    overflow-y: scroll;
+    padding: 0.5em;
+}
+
+#output-pre > span.special {
+    color: #ff0000;
+}
+
+#output-pre > span.special-cr {
+    color: #0080ff;
+}
+
+#output-pre > span.special-lf {
+    color: #0000ff;
+}
+
+#output-pre > span.special-space {
+    background: #d0d0d0;
+}
+
+#output-pre > span.special-tab {
+    background: #a0a0a0;
+}
+
