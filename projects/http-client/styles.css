@@ -11,7 +11,7 @@ body {
     padding: 1em;
 }
 
-body:not([show-output]) #view-output, body[show-output] #view-input {
+body:not([show-output]) #view-output, body[show-output] #view-input, body:not([show-error]) #view-error {
     display: none;
 }
 
@@ -67,3 +67,45 @@ body:not([show-output]) #view-output, body[show-output] #view-input {
     background: #a0a0a0;
 }
 
+#view-error {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #80808040;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#error-container {
+    background: white;
+    width: min(90%, 20cm);
+    height: min(80%, 10cm);
+
+    box-sizing: border-box;
+    padding: 0.5cm;
+    border: 0.5cm outset black;
+
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+#error-back {
+    width: 1cm;
+    height: 1cm;
+}
+
+#error-pre {
+    box-sizing: border-box;
+    border: 1px solid black;
+    padding: 0.5em;
+
+    width: 100%;
+    flex-grow: 1;
+
+    font-size: 2em;
+}
