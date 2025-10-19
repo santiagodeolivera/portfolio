@@ -1,4 +1,23 @@
 (() => {
+    class MyError extends Error {}
+
+    function recordError(errMessage, fn) {
+        try {
+            return fn();
+        } catch (e) {
+            console.error(e);
+            throw new MyError(errMessage);
+        }
+    }
+
+    async function recordErrorAsync(errMessage, fn) {
+        try {
+            return await fn();
+        } catch (e) {
+            console.error(e);
+            throw new MyError(errMessage);
+        }
+    }
     
     class HttpRequestDataRaw {
         constructor(action, url, httpVersion, headers, body) {
@@ -21,11 +40,14 @@
             headers.append(name, value);
         }
 
-        const response = await fetch(data.url, {
-            method: data.method,
-            headers: headers,
-            body: data.body
-        });
+        const response = await recordErrorAsync(
+            "Error while executing HTTP request",
+            () => fetch(data.url, {
+                method: data.method,
+                headers: headers,
+                body: data.body
+            })
+        );
 
         return response;
     }
@@ -35,11 +57,11 @@
         const httpVersions = ["??"];
         return function validateHttpRequest(data) {
             if (!actions.includes(data.action)) {
-                throw new Error("Request action is not included in list of allowed actions");
+                throw new MyError("Request action is not included in list of allowed actions");
             }
 
             if (!httpVersions.includes(data.httpVersion)) {
-                throw new Error("Request HTTP version is not included in list of allowed HTTP versions");
+                throw new MyError("Request HTTP version is not included in list of allowed HTTP versions");
             }
 
             const url = new URL(data.url);
@@ -54,13 +76,13 @@
 
         function processStartLine(line) {
             if (line == undefined) {
-                throw new Error("There is no start line");
+                throw new MyError("There is no start line");
             }
 
             const match = line.matchAll(startLineRE).next().value;
 
             if (match == undefined) {
-                throw new Error("Start line does not match pattern");
+                throw new MyError("Start line does not match pattern");
             }
 
             return { action: match[1], url: match[2], httpVersion: match[3] };
@@ -78,7 +100,7 @@
                 
 
                 if (match == undefined) {
-                    throw new Error("Start line does not match pattern");
+                    throw new MyError("Start line does not match pattern");
                 }
 
                 const newHeader = { name: match[1], value: match[2] };
@@ -194,20 +216,47 @@
     const inputSubmit = document.getElementById("input-submit");
     const outputPre = document.getElementById("output-pre");
     const outputBack = document.getElementById("output-back");
+    const errorPre = document.getElementById("error-pre");
+    const errorBack = document.getElementById("error-back");
+
+    function showMessageInErrorView(msg) {
+        errorPre.textContent = msg;
+        document.body.setAttribute("show-error", "");
+    }
+
+    errorBack.addEventListener("click", () => {
+        document.body.removeAttribute("show-error");
+    });
+
+    async function recordErrorInDOM(fn) {
+        try {
+            return await fn();
+        } catch (e) {
+            if (e instanceof MyError) {
+                showMessageInErrorView(e.message);
+            } else {
+                throw e;
+            }
+        }
+    }
 
     inputSubmit.addEventListener("click", async () => {
-        const text = inputTextarea.value;
-        const rawRequest = parseHttpRequest(text);
-        const request = validateHttpRequest(rawRequest);
-        const response = await executeHttpRequest(request);
-        console.log(response);
-        const elements = await responseToText(response);
-        outputPre.textContent = "";
-        outputPre.append(...elements);
-        document.body.setAttribute("show-output", "");
+        recordErrorInDOM(
+            async () => {
+                const text = inputTextarea.value;
+                const rawRequest = parseHttpRequest(text);
+                const request = validateHttpRequest(rawRequest);
+                const response = await executeHttpRequest(request);
+                console.log(response);
+                const elements = await responseToText(response);
+                outputPre.textContent = "";
+                outputPre.append(...elements);
+                document.body.setAttribute("show-output", "");
+            }
+        );
     });
 
     outputBack.addEventListener("click", () => {
         document.body.removeAttribute("show-output");
-    })
+    });
 })();
