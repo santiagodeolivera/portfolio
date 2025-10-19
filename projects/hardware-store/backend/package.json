@@ -21,6 +21,6 @@
   },
   "imports": {
     "#root/*": "./src/*",
-    "#local/*": "./local/*"
+    "#local/*": "./__local-data/*"
   }
 }
