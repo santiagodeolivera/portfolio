@@ -1,12 +1,20 @@
 import { createNewUser, verifyUser } from '#root/database/user.js';
-import { assertString } from '#root/utils.js';
+import { assertObject, assertString, BadReqError } from '#root/utils.js';
 import { Router } from 'express';
+
+const invalidCredentialsErrorFn = () => new BadReqError("Invalid credentials");
 
 const router = Router();
 
+function getNameAndPasswordFromBody(req) {
+    const body = assertObject(req.body, invalidCredentialsErrorFn);
+    const name = assertString(body.username, invalidCredentialsErrorFn);
+    const password = assertString(body.password, invalidCredentialsErrorFn);
+    return {name, password};
+}
+
 router.post("/signup", async (req, res) => {
-    const name = assertString(req.body.name);
-    const password = assertString(req.body.password);
+    const {name, password} = getNameAndPasswordFromBody(req);
 
     const newId = await createNewUser(name, password);
     req.session.userId = newId;
@@ -15,15 +23,12 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-    const name = assertString(req.body.name);
-    const password = assertString(req.body.password);
+    const {name, password} = getNameAndPasswordFromBody(req);
 
     const userId = await verifyUser(name, password);
-    if (!userId.success) {
-        res.status(400).send(userId.value);
-        return;
-    }
+    req.session.userId = userId;
     
-    req.session.userId = userId.value;
     res.status(200).end();
 });
+
+export { router };

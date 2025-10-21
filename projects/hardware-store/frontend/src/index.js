@@ -45,6 +45,7 @@ app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use("/__local", express.static(path.join(__dirname, '__local-public')));
 
 app.use(mainRouter);
 
@@ -60,7 +61,11 @@ if (environ === "development") {
 app.use((err, req, res, next) => {
 	res.status(500);
 	console.error(err);
-	res.send("Internal server error");
+	res.send("Internal server error"); 
+});
+
+app.use((req, res) => {
+	res.status(404).send("Route not found");
 });
 
 app.listen(port, () => {

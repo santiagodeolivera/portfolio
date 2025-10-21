@@ -125,7 +125,8 @@ body {
 
 .notif-deployment-system > .notif {
 	display: flex;
-	padding: 1em;
+	padding: 0.5em;
+	margin-top: 0.25em;
 	width: 100%;
 	background: #e0e0e080;
 	border-radius: 0.5em;
@@ -139,12 +140,18 @@ body {
 	background: #ff000080;
 }
 
+.notif-deployment-system > .notif.type-success {
+	background: #00ff0080;
+}
+
 .notif-deployment-system > .notif > .-txt {
 	flex-grow: 1;
+	padding: 0.5em;
 }
 
 .notif-deployment-system > .notif > .-close-btn {
-	width: 1em;
+	width: 2em;
+	margin-right: 0.5em;
 	
 	background-image: url("/images/close.svg");
 	background-origin: content-box;
@@ -154,6 +161,8 @@ body {
 	background-repeat: no-repeat;
 	
 	opacity: 0.3;
+
+	cursor: pointer;
 }
 
 .notif-deployment-system > .notif > .-close-btn:hover {

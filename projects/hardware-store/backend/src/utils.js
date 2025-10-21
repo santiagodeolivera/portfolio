@@ -1,6 +1,23 @@
-export function assertString(v) {
+export class BadReqError extends Error {}
+
+function refineError(error) {
+    if (error == undefined) return new Error();
+    if (typeof error === "string") return new Error(error);
+    if (typeof error === "function") return error();
+    return error;
+}
+
+export function assertObject(v, error) {
+    if (typeof v !== "object") {
+        throw refineError(error);
+    }
+
+    return v;
+}
+
+export function assertString(v, error) {
     if (typeof v !== "string") {
-        throw new Error();
+        throw refineError(error);
     }
 
     return v;

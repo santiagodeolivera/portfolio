@@ -40,19 +40,23 @@
 				
 				this.availability.value = false;
 				
-				window.setTimeout(async () => {
-					const reqBody = JSON.stringify({username, password: _password});
-					const response = await fetchFromBackend("/signup", { method: "POST", body: reqBody });
+				const reqBody = JSON.stringify({username, password: _password});
+				const response = await fetchFromBackend("/signup", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json; charset=utf-8"
+					},
+					body: reqBody
+				});
 
-					if (response.status >= 400 && response.status < 600) {
-						const msg = await response.text();
-						notifDeploymentSystem.addNotif(msg);
-					} else if (response.status === 201) {
-						notifDeploymentSystem.addNotif("Success!");
-					}
+				if (response.status >= 400 && response.status < 600) {
+					const msg = await response.text();
+					notifDeploymentSystem.addNotif({txt: msg, type: "error"});
+				} else if (response.status === 201) {
+					notifDeploymentSystem.addNotif({txt: "Success!", type: "success"});
+				}
 
-					this.availability.value = true;
-				}, 1000);
+				this.availability.value = true;
 			}
 			
 			addClickListener(fn) {

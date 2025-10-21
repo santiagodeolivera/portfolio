@@ -1,12 +1,13 @@
 import crypto from 'node:crypto';
-import { promisify } from '#root/utils.js';
+import { BadReqError, promisify } from '#root/utils.js';
 import { db } from "./core.js";
+import { SqliteError } from 'better-sqlite3';
 
 const pbkdf2 = promisify(crypto.pbkdf2);
 
 const stmts = {
-    add: db.prepare("INSERT INTO users (name, salt, hash) VALUES (@name, @salt, @hash)"),
-    getByName: db.prepare("SELECT id, salt, hash FROM users WHERE name = @name")
+    add: db.prepare("INSERT INTO users (name, passwordSalt, passwordHash) VALUES (@name, @salt, @hash)"),
+    getByName: db.prepare("SELECT id, passwordSalt as salt, passwordHash as hash FROM users WHERE name = @name")
 };
 
 async function createSalt() {
@@ -23,6 +24,13 @@ async function insertUserRow(name, salt, hash) {
         const result = stmts.add.run({ name, salt, hash });
         return result.lastInsertRowId;
     } catch (e) {
+        if (
+            e instanceof SqliteError &&
+            e.code === "SQLITE_CONSTRAINT_UNIQUE" &&
+            e.message === "UNIQUE constraint failed: users.name"
+        ) {
+            throw new BadReqError("Already existing user");
+        }
         console.error("An error appeared when registering new user.");
         throw e;
     }
@@ -45,15 +53,15 @@ async function verifyPassword(storedSalt, storedHash, password) {
 export async function verifyUser(name, password) {
     const dbResult = stmts.getByName.get({ name });
     if (dbResult == undefined) {
-        return { success: false, value: "Invalid credentials" };
+        throw new BadReqError("Invalid credentials");
     }
 
     const { id, salt, hash } = dbResult;
     const valid = verifyPassword(salt, hash, password);
     if (!valid) {
-        return { success: false, value: "Invalid credentials" };
+        throw new BadReqError("Invalid credentials");
     }
 
-    return { success: true, value: id };
+    return id;
 }
 

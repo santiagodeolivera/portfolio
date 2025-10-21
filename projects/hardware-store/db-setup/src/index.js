@@ -16,7 +16,7 @@ const commands = [
     ["INSERT INTO products (name) VALUES (?)", "B"],
     ["INSERT INTO products (name) VALUES (?)", "C"],
     ["INSERT INTO products (name) VALUES (?)", "D"],
-    ["CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(30) NOT NULL, salt CHAR(10) NOT NULL, password CHAR(64) NOT NULL)"],
+    ["CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(30) NOT NULL UNIQUE, passwordSalt CHAR(10) NOT NULL, passwordHash CHAR(64) NOT NULL)"],
 ];
 
 for (const [command, ...bindParams] of commands) {

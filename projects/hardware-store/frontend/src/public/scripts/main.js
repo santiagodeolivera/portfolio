@@ -61,8 +61,27 @@
 		window.notifDeploymentSystems[div.id] = new NotifDeploymentSystem(div);
 	}
 
-	// DEVELOPMENT
-	const backendDomain = "http://back:3000";
+	function cached(fn) {
+		let stored = false;
+		let value = undefined;
+
+		const result = async function() {
+			if (!stored) {
+				value = await fn();
+				stored = true;
+			}
+
+			return value;
+		}
+
+		return result;
+	}
+
+	const getBackendUrl = cached(async () => {
+		const response = await fetch("/__local/data.json");
+		const json = await response.json();
+		return json["backend-url"];
+	});
 
 	/**
 	 * 
@@ -72,7 +91,8 @@
 	 * @returns 
 	 */
 	async function fetchFromBackend(path, options = undefined) {
-		const url = new URL(path, backendDomain);
+		const backendUrl = await getBackendUrl();
+		const url = new URL(path, backendUrl);
 		const response = await fetch(url, options);
 		return response;
 	}
