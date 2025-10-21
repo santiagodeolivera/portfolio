@@ -78,6 +78,11 @@ body {
 	background-color: #b0b0b0;
 }
 
+#nav > .nav-link {
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
 .product-card {
 	display: flex;
 	flex-direction: column;

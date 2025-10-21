@@ -1,9 +1,9 @@
 (() => {
 	const { System } = (() => {
-		const loginDiv = document.getElementById("e9aec770-a0db-4a59-87c9-6bef65078891-login-card");
-		const usernameInput = document.getElementById("0685f8e3-08a6-44bd-8112-4cb6b233bce5-text");
-		const passwordInput = document.getElementById("9935842e-963c-4bb2-97e6-9b81c023ef01-password");
-		const submitBtn = document.getElementById("72932964-c85e-4994-8361-dbb27c2d4749-submit");
+		const loginDiv = document.getElementById("c44a7de8-d3a3-4c76-bfe3-688ea491780d-login-card");
+		const usernameInput = document.getElementById("6b8bcc29-34b9-4fbc-950b-553956d24127-text");
+		const passwordInput = document.getElementById("66fb6892-860e-4a8d-9938-bcd2d58f30e4-password");
+		const submitBtn = document.getElementById("2746d028-c48f-452a-ae60-0871c1a6f764-submit");
 		
 		const notifDeploymentSystem = window.notifDeploymentSystems["624bd2f5-bf29-47a5-a38d-1e688e26c751-notif"];
 		
@@ -42,12 +42,12 @@
 				
 				window.setTimeout(async () => {
 					const reqBody = JSON.stringify({username, password: _password});
-					const response = await fetchFromBackend("/login", { method: "POST", body: reqBody });
+					const response = await fetchFromBackend("/signup", { method: "POST", body: reqBody });
 
 					if (response.status >= 400 && response.status < 600) {
 						const msg = await response.text();
 						notifDeploymentSystem.addNotif(msg);
-					} else if (response.status === 200) {
+					} else if (response.status === 201) {
 						notifDeploymentSystem.addNotif("Success!");
 					}
 

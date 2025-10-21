@@ -4,7 +4,8 @@ function getBaseData(req) {
 		CSSFiles: [],
 		scriptFiles: [],
 		navLinks: [
-			{txt: "Log in", href: "/login"}
+			{txt: "Log in", href: "/login"},
+			{txt: "Sign up", href: "/signup"}
 		]
 	};
 }
@@ -21,7 +22,8 @@ function verifyData(data) {
 		}
 		
 		if (!fileNameRegExp.test(v)) {
-			throw new Error();
+			const quoted = JSON.stringify(v);
+			throw new Error(`Invalid file name for regexp /^[a-zA-Z0-9-_]+$/: ${quoted}`);
 		}
 	}
 }

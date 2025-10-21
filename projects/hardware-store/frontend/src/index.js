@@ -11,6 +11,7 @@ import { env } from "#root/env.js";
 const { __dirname } = getData(import.meta.url);
 
 // TODO: Set favicon.ico
+// TODO: Remove session data, if necessary
 
 const app = express();
 const hbs = expressHandlebars.create({
@@ -42,15 +43,6 @@ const port = 3000;
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
-
-app.use(expressSession({
-	secret: env["session-secret"],
-	resave: false,
-	saveUninitialized: false,
-	cookie: {
-		maxAge: 30 * 60 * 1000
-	}
-}));
 
 app.use(express.static(path.join(__dirname, 'public')));
 

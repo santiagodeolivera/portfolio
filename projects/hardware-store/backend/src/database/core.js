@@ -1,11 +1,10 @@
 /*
 
-type DbFunction<I, O, E> = fn(I) -> Result<O, E>;
-
+How to abstract database access?
 Possible solutions:
     A generic database that supports all CRUD operations
     Individual functions
-    A router that supports all CRUD operations
+    An express router that supports all CRUD operations
 
 */
 
@@ -15,33 +14,37 @@ import { env } from '../env.js';
 export const db = SqliteDatabase(env["db-path"]);
 
 export class GenericDatabase {
+    #stmts;
+
     constructor(getStmt, getByIdStmt, addStmt, editStmt, removeStmt) {
-        this.getStmt = db.prepare(getStmt);
-        this.getByIdStmt = db.prepare(getByIdStmt);
-        this.addStmt = db.prepare(addStmt);
-        this.editStmt = db.prepare(editStmt);
-        this.removeStmt = db.prepare(removeStmt);
+        this.stmts = {
+            get: db.prepare(getStmt),
+            getById: db.prepare(getByIdStmt),
+            add: db.prepare(addStmt),
+            edit: db.prepare(editStmt),
+            remove: db.prepare(removeStmt)
+        };
     }
 
     async get() {
-        return this.getStmt.all();
+        return this.#stmts.get.all();
     }
 
     async getById(id) {
-        return this.getByIdStmt.get({ id });
+        return this.#stmts.getById.get({ id });
     }
 
     async add(data) {
-        this.addStmt.run(data);
+        this.#stmts.add.run(data);
     }
 
     async edit(id, data) {
-        const res = this.editStmt.run({ ...data, id });
+        const res = this.#stmts.edit.run({ ...data, id });
         return res.changes > 0;
     }
 
     async remove(id) {
-        const res = this.removeStmt.run({ id });
+        const res = this.#stmts.remove.run({ id });
         return res.changes > 0;
     }
 }

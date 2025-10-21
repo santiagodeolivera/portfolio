@@ -7,7 +7,7 @@ services:
       - "4000:3000"
     volumes:
       - ./frontend/src:/usr/src/app/src
-      - ./frontend/local:/usr/src/app/local
+      - ./frontend/__local-data:/usr/src/app/__local-data
       - /usr/src/app/node_modules
     networks:
       - hardware-store--network
@@ -20,7 +20,7 @@ services:
       - "5000:3000"
     volumes:
       - ./backend/src:/usr/src/app/src
-      - ./backend/local:/usr/src/app/local
+      - ./backend/__local-data:/usr/src/app/__local-data
       - /usr/src/app/node_modules
       - hardware-store--db:/usr/db
     networks:
@@ -32,7 +32,7 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ./db-setup/src:/usr/src/app/src
-      - ./db-setup/local:/usr/src/app/local
+      - ./db-setup/__local-data:/usr/src/app/__local-data
       - /usr/src/app/node_modules
       - hardware-store--db:/usr/db
 

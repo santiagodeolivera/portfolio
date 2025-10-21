@@ -1,6 +1,14 @@
+# Data structures
+
 Product:
     name: string
     price: int
     stock: int
     description: int
     image: Img
+
+# Preparations for deployment
+
+* Revise the docker-compose.yaml and Dockerfile files
+* Revise all comments with the term "DEVELOPMENT"
+* Revise all comments with the term "TODO"

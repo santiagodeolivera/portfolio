@@ -8,4 +8,8 @@ if (typeof env["db-path"] !== "string") {
     throw new Error("Invalid environment variables (#295)");
 }
 
+if (typeof env["session-secret"] !== "string") {
+    throw new Error("Invalid environment variables (#77)");
+}
+
 export { env };

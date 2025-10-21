@@ -4,7 +4,9 @@ import fs from "fs";
 
 const dbPath = env["db-path"];
 
-fs.unlinkSync(dbPath);
+if (fs.existsSync(dbPath)) {
+    fs.unlinkSync(dbPath);
+}
 
 const db = Database(dbPath);
 

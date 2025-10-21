@@ -60,4 +60,22 @@
 	for (const div of document.querySelectorAll("div.notif-deployment-system")) {
 		window.notifDeploymentSystems[div.id] = new NotifDeploymentSystem(div);
 	}
+
+	// DEVELOPMENT
+	const backendDomain = "http://back:3000";
+
+	/**
+	 * 
+	 * @param {string} path 
+	 * @param {RequestInit} options 
+	 * @param {(msg: string) => void} callback 
+	 * @returns 
+	 */
+	async function fetchFromBackend(path, options = undefined) {
+		const url = new URL(path, backendDomain);
+		const response = await fetch(url, options);
+		return response;
+	}
+
+	window.fetchFromBackend = fetchFromBackend;
 })();
