@@ -18,7 +18,7 @@ async function saltAndHash(salt, password) {
     return await pbkdf2(password, salt, 100000, 64, "sha512");
 }
 
-// Tries to insert a user into the database, returning true or false according to success or failure
+// Tries to insert a user into the database, returning its new id if successful.
 async function insertUserRow(name, salt, hash) {
     try {
         const result = stmts.add.run({ name, salt, hash });
@@ -36,7 +36,7 @@ async function insertUserRow(name, salt, hash) {
     }
 }
 
-// Tries to create a new user, returning true or false according to success or failure
+// Tries to create a new user, returning its id if successful.
 export async function createNewUser(name, password) {
     const salt = await createSalt();
     const hash = await saltAndHash(salt, password);
@@ -44,7 +44,7 @@ export async function createNewUser(name, password) {
     return await insertUserRow(name, salt, hash);
 }
 
-// Returns true if the password matches with the stored salt and hash. Otherwise, returns false
+// Returns whether the password matches with the stored salt and hash.
 async function verifyPassword(storedSalt, storedHash, password) {
     const resultHash = await saltAndHash(storedHash, password);
     return resultHash === storedHash;
