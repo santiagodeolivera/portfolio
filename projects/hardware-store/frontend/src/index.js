@@ -35,7 +35,7 @@ const hbs = expressHandlebars.create({
 			
 			return value;
 		},
-		or: (value1, _default) => (value == undefined ? _default : value1)
+		or: (value, _default) => (value == undefined ? _default : value)
 	}
 });
 const port = 3000;
