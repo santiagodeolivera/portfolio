@@ -1,3 +1,14 @@
+# Setup - Development
+
+Set up docker network and volume
+CMD "docker compose up --build setup"
+CMD "docker compose up --build back"
+CMD "docker compose up --build front"
+
+# Setup - Production
+
+???
+
 # Data structures
 
 Product:

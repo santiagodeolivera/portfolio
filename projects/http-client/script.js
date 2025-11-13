@@ -240,7 +240,7 @@
         }
     }
 
-    inputSubmit.addEventListener("click", async () => {
+    inputSubmit.addEventListener("click", () => {
         recordErrorInDOM(
             async () => {
                 const text = inputTextarea.value;
