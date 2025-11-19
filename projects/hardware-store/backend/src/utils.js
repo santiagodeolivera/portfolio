@@ -48,6 +48,13 @@ export function getNumberFromParams(req, key) {
 }
 
 // For functions of structure (..., (err, value) => ...) => ...
+/**
+ * @template {any[]} Args
+ * @template E
+ * @template V
+ * @param {(...args: [...Args, (...a2: [undefined, V] | [E, undefined]) => void])} fn 
+ * @returns {(...args: Args) => Promise<V>}
+ */
 export function promisify(fn) {
     return (...args) => new Promise((resolve, reject) => {
         fn(...args, (err, value) => {
