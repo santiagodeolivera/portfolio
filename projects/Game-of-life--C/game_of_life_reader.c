@@ -10,9 +10,15 @@ typedef struct {
     MATRIX_INDEX_TYPE height;
     CharFunc charFunc;
     void *ctx;
-} GameOfLife_ReaderFromStr;
+} GameOfLife_Reader;
 
-char GameOfLife_ReaderFromStr_new(MATRIX_INDEX_TYPE width, MATRIX_INDEX_TYPE height, CharFunc charFunc, void *ctx, GameOfLife_ReaderFromStr *dst) {
+char GameOfLife_Reader_new(
+    MATRIX_INDEX_TYPE width,
+    MATRIX_INDEX_TYPE height,
+    CharFunc charFunc,
+    void *ctx,
+    GameOfLife_Reader *dst
+) {
     dst->width = width;
     dst->height = height;
     dst->charFunc = charFunc;
@@ -24,7 +30,7 @@ static void fn1(MATRIX_INDEX_TYPE x, MATRIX_INDEX_TYPE y, void* dst, void* ctx) 
 	*((BOOL_TYPE*) dst) = (BOOL_TYPE) 0;
 }
 
-char GameOfLife_ReaderFromStr_read(GameOfLife_ReaderFromStr *self, GameOfLife *dst) {
+char GameOfLife_Reader_read(GameOfLife_Reader *self, GameOfLife *dst) {
     Matrix matrix;
     if (!Matrix_new(sizeof(BOOL_TYPE), self->width, self->height, fn1, NULL, &matrix)) {
         return 0;
