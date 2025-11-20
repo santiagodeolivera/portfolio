@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "./game_of_life.h"
 #include "./matrix.h"
 
@@ -49,8 +50,14 @@ char GameOfLife_Reader_read(GameOfLife_Reader *self, GameOfLife *dst) {
         } else if (newChar == '\n') {
             x = 0;
             y += 1;
+        } else if (newChar == EOF) {
+            break;
         }
     }
 
-    return GameOfLife_fromMatrix(matrix, dst);
+    if (!GameOfLife_fromMatrix(matrix, dst)) {
+        return 0;
+    }
+
+    return 1;
 }

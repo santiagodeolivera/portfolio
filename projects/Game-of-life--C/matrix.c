@@ -30,7 +30,9 @@ char Matrix_new(
 	Matrix *dst
 ) {
 	void *space = malloc(elemSize * width * height);
-	if (space == NULL) return 0;
+	if (space == NULL) {
+		return 0;
+	}
 	
 	Matrix result = {
 		.space = space,

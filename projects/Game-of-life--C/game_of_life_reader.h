@@ -4,6 +4,8 @@
 
 #include "./config.h"
 
+typedef char (*CharFunc)(void*);
+
 typedef struct {
     MATRIX_INDEX_TYPE width;
     MATRIX_INDEX_TYPE height;

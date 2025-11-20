@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "./game_of_life.h"
+#include "./game_of_life_from_file.h"
 
 void repeatUntilExit(void (*func)(void*), void* ctx) {
 	#ifdef LEN
@@ -90,6 +91,21 @@ void fn1234(void *ctx) {
 
 int main() {
 	GameOfLife g;
+	if (!GameOfLife_fromFile("./input.txt", &g)) {
+		fprintf(stderr, "ERROR: GameOfLife could not be created\n");
+		return 0;
+	}
+
+	GameOfLife_print(&g);
+	
+	repeatUntilExit(fn1234, &g);
+	
+	GameOfLife_destroy(&g);
+}
+
+/*
+int main() {
+	GameOfLife g;
 	if (!GameOfLife_new(50, 50, custom_fn1, coords, &g)) {
 		fprintf(stderr, "ERROR: GameOfLife could not be created\n");
 		return 0;
@@ -101,3 +117,4 @@ int main() {
 	
 	GameOfLife_destroy(&g);
 }
+*/
