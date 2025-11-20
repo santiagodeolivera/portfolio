@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include "./matrix.h"
 
-#ifdef BOOL_TYPE
-	#error BOOL_TYPE already defined
-#endif
-
-#define BOOL_TYPE int
+#include "./config.h"
 
 typedef struct {
 	Matrix data;
@@ -150,5 +146,3 @@ void GameOfLife_destroy(GameOfLife *self) {
 	Matrix_destroy(&self->data);
 	Matrix_destroy(&self->backup);
 }
-
-#undef BOOL_TYPE

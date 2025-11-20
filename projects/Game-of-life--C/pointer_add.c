@@ -1,5 +1,5 @@
 #ifdef DEF_POINTER_ADD
-	#error POINTER_ADD already defined
+	#error DEF_POINTER_ADD already defined
 #endif
 
 #define DEF_POINTER_ADD(name, type) \

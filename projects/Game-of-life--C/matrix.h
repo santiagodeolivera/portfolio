@@ -1,10 +1,6 @@
 #include <stddef.h>
 
-#ifdef MATRIX_INDEX_TYPE
-	#error MATRIX_INDEX_TYPE already defined
-#endif
-
-#define MATRIX_INDEX_TYPE unsigned int
+#include "./config.h"
 
 typedef struct {
 	void *space;
@@ -29,5 +25,3 @@ char Matrix_clone(Matrix *self, Matrix *dst);
 void Matrix_iterate(Matrix *self, void (*func)(MATRIX_INDEX_TYPE, MATRIX_INDEX_TYPE, void*, void*), void *funcCtx);
 
 void Matrix_destroy(Matrix *self);
-
-#undef MATRIX_INDEX_TYPE

@@ -3,11 +3,7 @@
 #include <stdlib.h>
 #include "pointer_add.h"
 
-#ifdef MATRIX_INDEX_TYPE
-	#error MATRIX_INDEX_TYPE already defined
-#endif
-
-#define MATRIX_INDEX_TYPE unsigned int
+#include "./config.h"
 
 typedef struct {
 	void *space;
@@ -78,5 +74,3 @@ void Matrix_iterate(Matrix *self, void (*func)(MATRIX_INDEX_TYPE, MATRIX_INDEX_T
 void Matrix_destroy(Matrix *self) {
 	free(self->space);
 }
-
-#undef MATRIX_INDEX_TYPE
