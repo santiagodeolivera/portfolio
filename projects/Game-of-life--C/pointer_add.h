@@ -1,3 +1,5 @@
+#pragma once
+
 #include "./config.h"
 
 #ifdef DEF_POINTER_ADD

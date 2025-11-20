@@ -135,7 +135,7 @@ static BOOL_TYPE fn4(int neighbors, BOOL_TYPE isAlive) {
 	return (BOOL_TYPE) (neighbors == 3 || isAlive && neighbors == 2);
 }
 
-static void fn5(unsigned int x, unsigned int y, void *p, void *ctx) {
+static void fn5(MATRIX_INDEX_TYPE x, MATRIX_INDEX_TYPE y, void *p, void *ctx) {
 	GameOfLife *self = (GameOfLife*) ctx;
 	Matrix *data = &self->data;
 	Matrix *backup = &self->backup;

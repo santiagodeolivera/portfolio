@@ -1,3 +1,5 @@
+#pragma once
+
 #include "./matrix.h"
 
 #include "./config.h"
@@ -12,6 +14,11 @@ char GameOfLife_new(
 	MATRIX_INDEX_TYPE height,
 	BOOL_TYPE (*func)(MATRIX_INDEX_TYPE, MATRIX_INDEX_TYPE, void*),
 	void *funcCtx,
+	GameOfLife *dst
+);
+
+char GameOfLife_fromMatrix(
+	Matrix data,
 	GameOfLife *dst
 );
 
