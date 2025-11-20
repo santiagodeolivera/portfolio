@@ -1,3 +1,5 @@
+#include "./config.h"
+
 #ifdef DEF_POINTER_ADD
 	#error DEF_POINTER_ADD already defined
 #endif
@@ -5,6 +7,6 @@
 #define DEF_POINTER_ADD(name, type) \
 	void* name(void *prev, type dx);
 
-DEF_POINTER_ADD(pointer_add, unsigned int)
+DEF_POINTER_ADD(pointer_add, MATRIX_INDEX_TYPE)
 
 #undef DEF_POINTER_ADD

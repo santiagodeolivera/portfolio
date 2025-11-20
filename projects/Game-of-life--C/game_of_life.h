@@ -8,9 +8,9 @@ typedef struct {
 } GameOfLife;
 
 char GameOfLife_new(
-	unsigned int width,
-	unsigned int height,
-	BOOL_TYPE (*func)(unsigned int, unsigned int, void*),
+	MATRIX_INDEX_TYPE width,
+	MATRIX_INDEX_TYPE height,
+	BOOL_TYPE (*func)(MATRIX_INDEX_TYPE, MATRIX_INDEX_TYPE, void*),
 	void *funcCtx,
 	GameOfLife *dst
 );
