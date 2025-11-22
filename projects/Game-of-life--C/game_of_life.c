@@ -33,12 +33,6 @@ static void fn2(MATRIX_INDEX_TYPE x, MATRIX_INDEX_TYPE y, void* dst, void* ctx) 
 	#error MATRIX_SET_1234 already defined
 #endif
 
-#define MATRIX_SET_1234(name, width, height, func, ctx) \
-	Matrix name; \
-	if (!Matrix_new(sizeof(BOOL_TYPE), width, height, func, ctx, &name)) { \
-		return 0; \
-	}
-
 char GameOfLife_new(
 	MATRIX_INDEX_TYPE width,
 	MATRIX_INDEX_TYPE height,
@@ -50,8 +44,16 @@ char GameOfLife_new(
 		.func = func, .ctx = funcCtx
 	};
 	
-	MATRIX_SET_1234(data, width, height, fn1, &closure);
-	MATRIX_SET_1234(backup, width, height, fn2, NULL);
+	Matrix data;
+	if (!Matrix_new(sizeof(BOOL_TYPE), width, height, fn1, &closure, &data)) {
+		return 0;
+	}
+
+	Matrix backup;
+	if (!Matrix_new(sizeof(BOOL_TYPE), width, height, fn2, NULL, &backup)) {
+		Matrix_destroy(&data);
+		return 0;
+	}
 	
 	*dst = (GameOfLife) { .data = data, .backup = backup };
 	return 1;
@@ -63,14 +65,16 @@ char GameOfLife_fromMatrix(
 ) {
 	MATRIX_INDEX_TYPE width = data.width;
 	MATRIX_INDEX_TYPE height = data.height;
-	MATRIX_SET_1234(backup, width, height, fn2, NULL);
+
+	Matrix backup;
+	if (!Matrix_new(sizeof(BOOL_TYPE), width, height, fn2, NULL, &backup)) {
+		return 0;
+	}
 
 	*dst = (GameOfLife) { .data = data, .backup = backup };
 	return 1;
 }
 
-#undef MATRIX_SET_1234
-	
 static void fn3(MATRIX_INDEX_TYPE x, MATRIX_INDEX_TYPE y, void *src, void *ctx) {
 	MATRIX_INDEX_TYPE widthMinus1 = *((MATRIX_INDEX_TYPE*) ctx);
 	
