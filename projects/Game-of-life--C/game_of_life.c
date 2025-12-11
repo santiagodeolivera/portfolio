@@ -29,10 +29,6 @@ static void fn2(MATRIX_INDEX_TYPE x, MATRIX_INDEX_TYPE y, void* dst, void* ctx) 
 	*((BOOL_TYPE*) dst) = (BOOL_TYPE) 0;
 }
 
-#ifdef MATRIX_SET_1234
-	#error MATRIX_SET_1234 already defined
-#endif
-
 char GameOfLife_new(
 	MATRIX_INDEX_TYPE width,
 	MATRIX_INDEX_TYPE height,
