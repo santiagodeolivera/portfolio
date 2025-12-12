@@ -1,0 +1,13 @@
+<nav id="nav">
+	<div style="width: 50px; flex-shrink: 1;"></div>
+	<a href="/" style="display: contents;"><img class="-logo" src="/images/logo.svg"></a>
+	<div style="flex-grow: 2;"></div>
+	<div class="-search">
+		<input class="-input" type="text">
+		<button class="-submit"></button>
+	</div>
+	<div style="flex-grow: 1;"></div>
+	{{# each navLinks }}
+		<a class="nav-link" href={{ this.href }}>{{ this.txt }}</a>
+	{{/ each }}
+</nav>

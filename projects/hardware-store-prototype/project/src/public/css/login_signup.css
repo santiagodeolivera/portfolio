@@ -1,0 +1,31 @@
+.login-card {
+	width: 400px;
+	height: 200px;
+	
+	background: white;
+	box-shadow: 2px 2px 5px black;
+	margin: 10px auto;
+	padding: 20px 10px;
+	
+	display: flex;
+	flex-direction: column;
+}
+
+.login-card .-form {
+	display: contents;
+}
+
+.login-card .-submit {
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+
+.login-card.processing {
+	pointer-events: none;
+	opacity: 0.3;
+}
+
+.notif-deployment-system {
+	width: 400px;
+	margin: 10px auto;
+}

@@ -1,0 +1,6 @@
+<div class="product-card">
+	<span class="-name">{{ required product.name "product.name" }}</span>
+	<span class="-id">Id: {{ required product.id "product.id" }}</span>
+	<img class="-img" src={{ or product.img ""}} >
+	<span class="-price">${{ required product.price "product.price" }}</span>
+</div>
