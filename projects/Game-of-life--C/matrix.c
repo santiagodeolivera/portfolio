@@ -49,7 +49,7 @@ char Matrix_new(
 	return 1;
 }
 
-void Matrix_clone_func(MATRIX_INDEX_TYPE x, MATRIX_INDEX_TYPE y, void *p, void* ctx) {
+static void Matrix_clone_func(MATRIX_INDEX_TYPE x, MATRIX_INDEX_TYPE y, void *p, void* ctx) {
 	Matrix *self = (Matrix*) ctx;
 	memmove(p, Matrix_at_unsafe(self, x, y), self->elemSize);
 }
