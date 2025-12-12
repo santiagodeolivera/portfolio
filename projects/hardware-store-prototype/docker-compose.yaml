@@ -1,0 +1,11 @@
+services:
+  proj:
+    build:
+      context: project
+      dockerfile: Dockerfile
+    ports:
+      - "4000:3000"
+    volumes:
+      - ./project/src:/usr/src/app/src
+      - ./project/__local-data:/usr/src/app/__local-data
+      - /usr/src/app/node_modules
